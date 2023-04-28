@@ -1,0 +1,65 @@
+board = [["1","2","3"],["4","5","6"],["7","8","9"]]
+def displayBoard(board = board):
+    for i in range(3):
+        for j in range(3):
+            if j!=2:
+                print(board[i][j],end=" -- ")
+            else:
+                print(board[i][j])
+        for j in range(3):
+            if i!=2:
+                if j!=2:
+                    print("|  ",end = "  ")
+                else:
+                    print("|  ")
+            else:
+                print("")
+def updateBoard(board,pos,player):
+    column = (pos-1)%3
+    row = (pos-1)//3
+    if player==0:
+        board[row][column] = "X"
+    else:
+        board[row][column] = "O"
+def isMatchOver(board = board):
+        a = board[0][0]
+        b = board[0][1]
+        c = board[0][2]
+        d = board[1][0]
+        e = board[1][1]
+        f = board[1][2]
+        g = board[2][0]
+        h = board[2][1]
+        i = board[2][2]
+        if (a==b and b==c) or (e==f and f==d) or (g==h and h==i) or (a==d and d==g) or (b==e and h==e) or (c==f and f==i) or (a==e and e==i) or(c==e and e==g):
+            return 1
+        else:
+            return 0
+
+#Player X and Player O (Starts With Player X)
+confirm = int(input("Press 0 to Start Game\n"))
+
+if confirm==0: #Main Code Will Go Here
+    print("Please Enter Player Names")
+    player1 = input("Enter First Player's Name\n")
+    player2 = input("Enter Second Player's Name\n")
+    players = [player1,player2]
+    turn=0
+    while True:         #Main Game - Taking Turns, Updating the board and then Displaying the Board
+        player = turn%2
+        turn +=1
+        while True:         #Taking User input and Updating The Board
+            displayBoard()
+            a = int(input("It's "+players[player]+"'s Turn.\nEnter Your Number\n"))
+            if a<=9 and a>=1 and (board[(a-1)//3][(a-1)%3]!="X" or board[(a-1)//3][(a-1)%3]!="O"):
+                updateBoard(board,a,player)
+                break
+            else:
+                print("\n \n \nInvalid Input, Please Try Again")
+        if isMatchOver(board):
+            displayBoard()
+            print("Congratulations, "+players[player]+" Win!")
+            break
+
+else:
+    print("Invalid Input, Game Exit Successfully")
